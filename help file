@@ -1,0 +1,141 @@
+https://fuzzychinese.zenan-wang.com/
+
+fuzzychinese module
+SHOW SOURCE ≡
+
+Classes
+class FuzzyChineseMatch
+Match a collection of chinese words with a target list of words.
+
+Parameters
+ngram_range : tuple (min_n, max_n), default=(3, 3)
+
+The lower and upper boundary of the range of n-values for different n-grams to be extracted. All values of n such that min_n <= n <= max_n will be used.
+
+analyzer : string, {'char', 'stroke'}
+
+Whether the feature should be made of character or stroke n-grams.
+
+SHOW SOURCE ≡
+
+Ancestors (in MRO)
+FuzzyChineseMatch
+builtins.object
+Static methods
+def __init__(	self, ngram_range=(3, 3), analyzer='stroke')
+Initialize self. See help(type(self)) for accurate signature.
+
+SHOW SOURCE ≡
+
+def fit(	self, X)
+Learn the target list of the words.
+
+Parameters
+X : iterable
+
+an iterable which yields str
+
+Returns
+self : FuzzyChinese object
+
+SHOW SOURCE ≡
+
+def fit_transform(	self, X, n=3)
+Learn the target list of the words. Find similar words in the target itself.
+
+Parameters
+Y : iterable
+
+an iterable which yields str
+
+n : int
+
+top n matched to be returned
+
+Returns
+X : A numpy matrix. [n_samples, n_matches]
+
+Each row corresponds to the top n matches to the input row. Matches are sorted by descending order in similarity.
+
+SHOW SOURCE ≡
+
+def get_similarity_score(	self)
+Return the similarity score for last transform call.
+
+Returns
+X : A numpy matrix.
+
+Each row corresponds to the similarity score of top n matches.
+
+SHOW SOURCE ≡
+
+def transform(	self, Y, n=3)
+Match the list of words to a target list of words.
+
+Parameters
+Y : iterable
+
+an iterable which yields either str
+
+n : int
+
+top n matched to be returned
+
+Returns
+X : A numpy matrix. [n_samples, n_matches]
+
+Each row corresponds to the top n matches to the input row. Matches are sorted by descending order in similarity.
+
+SHOW SOURCE ≡
+
+Instance variables
+var analyzer
+var ngram_range
+class Stroke
+Translate a chinese character into strokes.
+
+Parameters
+dictionary_filepath : str, default=None.
+
+File path for user provided dictionary. Default dictionary will be used if not specified.
+
+A valid dictionary should be a "UTF-8" encoded text file, having two columns separated by space. First column is the character and the second column is its corresponding decomposition with each char stands for each stroke. Note, the decomposition does not have to be strokes, it can be numbers or letters, or any sequence of chars you like).
+
+An example dictionary:
+
+-------
+上 〡一一
+下 一〡㇔
+-------
+SHOW SOURCE ≡
+
+Ancestors (in MRO)
+Stroke
+builtins.object
+Static methods
+def __init__(	self, dictionary_filepath=None)
+Initialize self. See help(type(self)) for accurate signature.
+
+SHOW SOURCE ≡
+
+def get_stroke(	self, character, placeholder='', raise_error=False)
+Decompose a character into strokes based on dictionary.
+
+Parameters
+character : str
+
+A chinese character to be decomposed.
+
+placeholder : str, default = ''
+
+Output to be used when a character can not be decomposed.
+
+raise_error: boolean, default = False
+
+If true, raise error if a character can not be decomposed. The default action is to show warnings.
+
+Returns
+str, decomposition results.
+
+SHOW SOURCE ≡
+
